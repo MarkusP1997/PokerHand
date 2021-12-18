@@ -16,6 +16,12 @@ public class Pokerhand {
 
         if (isValid(hand1) && isValid(hand2)) {
             System.out.println("valid hands");
+            System.out.println("");
+            System.out.println("Hand 1:");
+            order(hand1);
+            System.out.println("");
+            System.out.println("Hand 2:");
+            order(hand2);
         }
     }
     public static boolean isValid(Card[] hand) {
@@ -24,5 +30,22 @@ public class Pokerhand {
             return false;
         }
         return true;
+    }
+    public static void order(Card[] hand) {
+        for (int i = 0; i < 5; i++) {
+            int maxV = hand[i].getV();
+            int maxCard = i;
+            for (int j = i+1; j < 5; j++) {
+                if (hand[j].getV() > maxV) {
+                    maxV = hand[j].getV();
+                    maxCard = j;
+                }
+            }
+            Card swap = hand[i];
+            hand[i] = hand[maxCard];
+            hand[maxCard] = swap;
+            System.out.println ("Card " + i + ": value=" + maxV);
+
+        }
     }
 }
