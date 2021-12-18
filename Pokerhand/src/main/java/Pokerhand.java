@@ -11,41 +11,23 @@ public class Pokerhand {
         final int K = 13;
         final int A = 14;
 
-        Card[] hand1 = {new Card(C,2), new Card(C,6), new Card(C,3), new Card(C,5), new Card(C,4)};
-        Card[] hand2 = {new Card(H,2), new Card(D,2), new Card(H,J), new Card(S,2), new Card(S,J)};
+        Card[] h1 = {new Card(C,2), new Card(C,6), new Card(C,3), new Card(C,5), new Card(C,4)};
+        Hand hand1 = new Hand (h1);
+        Card[] h2 = {new Card(H,2), new Card(D,2), new Card(H,J), new Card(S,2), new Card(S,J)};
+        Hand hand2 = new Hand (h2);
 
-        if (isValid(hand1) && isValid(hand2)) {
+        if (hand1.isValid() && hand2.isValid()) {
             System.out.println("valid hands");
             System.out.println("");
             System.out.println("Hand 1:");
-            order(hand1);
+            hand1.order();
+            hand1.isFlush();
+            hand1.isStraight();
             System.out.println("");
             System.out.println("Hand 2:");
-            order(hand2);
-        }
-    }
-    public static boolean isValid(Card[] hand) {
-        if (hand.length != 5) {
-            System.out.println("invalid number of cards on hand");
-            return false;
-        }
-        return true;
-    }
-    public static void order(Card[] hand) {
-        for (int i = 0; i < 5; i++) {
-            int maxV = hand[i].getV();
-            int maxCard = i;
-            for (int j = i+1; j < 5; j++) {
-                if (hand[j].getV() > maxV) {
-                    maxV = hand[j].getV();
-                    maxCard = j;
-                }
-            }
-            Card swap = hand[i];
-            hand[i] = hand[maxCard];
-            hand[maxCard] = swap;
-            System.out.println ("Card " + i + ": value=" + maxV);
-
+            hand2.order();
+            hand2.isFlush();
+            hand2.isStraight();
         }
     }
 }
