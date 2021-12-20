@@ -11,6 +11,13 @@ public class Hand {
         cards = c;
     }
 
+    public boolean isValid() {
+        if (cards.length != 5) {
+            System.out.println("invalid number of cards on hand");
+            return false;
+        }
+        return true;
+    }
     public void order() {
         System.out.print ("Card values: ");
         for (int i = 0; i < 5; i++) {
@@ -22,12 +29,16 @@ public class Hand {
                     maxCard = j;
                 }
             }
-            Card swap = cards[i];
-            cards[i] = cards[maxCard];
-            cards[maxCard] = swap;
+            swap (i, maxCard);
             System.out.print (maxV + " ");
         }
         System.out.println ("");
+    }
+    public void swap (int a, int b) {
+        Card swap = cards[a];
+        cards[a] = cards[b];
+        cards[b] = swap;
+
     }
 
     public boolean isFlush() {
@@ -37,7 +48,7 @@ public class Hand {
                 return false;
             }
         }
-        System.out.println("flush");
+        //System.out.println("flush");
         return true;
     }
 
@@ -48,17 +59,10 @@ public class Hand {
                 return false;
             }
         }
-        System.out.println("straight");
+        //System.out.println("straight");
         return true;
     }
 
-    public boolean isValid() {
-        if (cards.length != 5) {
-            System.out.println("invalid number of cards on hand");
-            return false;
-        }
-        return true;
-    }
 
     public void findPairs() {
         int counter = 1;
@@ -87,6 +91,31 @@ public class Hand {
                 counter = 1;
             }
         }
-
+    }
+    public int getRank() {
+        if (pair != 0) {
+            if (pair2 != 0) {
+                return 2; //Two pairs
+            } if (triple != 0) {
+                return 6; //Full House
+            }
+            return 1; //Pair
+        }
+        if (triple != 0) {
+            return 3; //Three of a kind
+        }
+        if(isStraight()) {
+            if(isFlush()) {
+                return 8;
+            }
+            return 4;
+        }
+        if(isFlush()) {
+            return 5; //Flush
+        }
+        if(quadruple != 0) {
+            return 7; //Four of a kind
+        }
+        return 0;
     }
 }

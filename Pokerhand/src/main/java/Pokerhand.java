@@ -11,14 +11,13 @@ public class Pokerhand {
         final int K = 13;
         final int A = 14;
 
-        Card[] h1 = {new Card(C,2), new Card(C,6), new Card(C,3), new Card(C,5), new Card(C,4)};
+        Card[] h1 = {new Card(C,2), new Card(C,6), new Card(D,4), new Card(C,5), new Card(C,8)};
+        Card[] h2 = {new Card(C,2), new Card(H,8), new Card(C,5), new Card(C,6), new Card(C,3)};
+        //Card[] h2 = {new Card(H,2), new Card(D,2), new Card(H,J), new Card(S,2), new Card(S,J)};
         Hand hand1 = new Hand (h1);
-        Card[] h2 = {new Card(H,2), new Card(D,2), new Card(H,J), new Card(S,2), new Card(S,J)};
         Hand hand2 = new Hand (h2);
 
         if (hand1.isValid() && hand2.isValid()) {
-            System.out.println("valid hands");
-            System.out.println("");
             System.out.println("Hand 1:");
             hand1.order();
             hand1.isFlush();
@@ -30,6 +29,33 @@ public class Pokerhand {
             hand2.isFlush();
             hand2.isStraight();
             hand2.findPairs();
+            int winner = 0;   //0 means draw
+            if (hand1.getRank() < hand2.getRank()) {
+                winner = 2;
+            } else if (hand1.getRank() > hand2.getRank()) {
+                winner = 1;
+            } else {
+                for (int i = 0; i < 5; i++) {
+                    if (hand1.cards[i].getV() < hand2.cards[i].getV()) {
+                        winner = 2;
+                        break;
+                    } else if (hand1.cards[i].getV() > hand2.cards[i].getV()) {
+                        winner = 1;
+                        break;
+                    }
+                }
+            }
+            switch (winner) {
+                case 2:
+                    System.out.println("Hand 2 has won");
+                    break;
+                case 1:
+                    System.out.println("Hand 1 has won");
+                    break;
+                default:
+                    System.out.println("Draw");
+                    break;
+            }
         }
     }
 }
