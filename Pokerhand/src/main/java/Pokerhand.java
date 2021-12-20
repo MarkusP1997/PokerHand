@@ -23,11 +23,13 @@ public class Pokerhand {
             hand1.order();
             hand1.isFlush();
             hand1.isStraight();
+            hand1.findPairs();
             System.out.println("");
             System.out.println("Hand 2:");
             hand2.order();
             hand2.isFlush();
             hand2.isStraight();
+            hand2.findPairs();
         }
     }
 }
