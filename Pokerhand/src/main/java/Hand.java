@@ -73,19 +73,30 @@ public class Hand {
                 switch (counter) {
                     case 2:
                         System.out.println("pair: " + cards[i - 1].getV());
-                        if (pair == 0) {
+                        if (pair != 0) {
                             pair = cards[i - 1].getV();
+                            swap(2, i-2);
+                            swap(3, i-1);
+                        } else if (triple != 0) {
+                            pair = cards[i - 1].getV();
+                            swap(3, i-2);
+                            swap(4, i-1);
                         } else {
                             pair2 = cards[i - 1].getV();
+                            swap(0, i-2);
+                            swap(1, i-1);
                         }
                         break;
                     case 3:
                         System.out.println("triple: " + cards[i - 1].getV());
                         triple = cards[i - 1].getV();
+                        swap(0, i-2);
+                        swap(1, i-1);
                         break;
                     case 4:
                         System.out.println("quadruple: " + cards[i - 1].getV());
                         quadruple = cards[i - 1].getV();
+                        swap(0, i-1);
                         break;
                 }
                 counter = 1;
