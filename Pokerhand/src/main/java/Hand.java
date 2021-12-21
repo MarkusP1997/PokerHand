@@ -1,15 +1,20 @@
 public class Hand {
 
-    Card[] cards;
+    private final Card[] cards;
 
-    //int rank;
-    int pair;
-    int pair2;
-    int triple;
-    int quadruple;
+    private int rank;
+    private int pair;
+    private int pair2;
+    private int triple;
+    private int quadruple;
 
     public Hand (Card[] c) {
         cards = c;
+        if(isValid()) {
+            order();
+            findPairs();
+            rank = determineRank();
+        }
     }
 
     public boolean isValid() {
@@ -19,8 +24,8 @@ public class Hand {
         }
         return true;
     }
+
     public void order() {
-        //System.out.print ("Card values: ");
         for (int i = 0; i < 5; i++) {
             int maxV = cards[i].getV();
             int maxCard = i;
@@ -31,25 +36,21 @@ public class Hand {
                 }
             }
             swap (i, maxCard);
-            //System.out.print (maxV + " ");
         }
-        //System.out.println ("");
     }
+
     public void swap (int a, int b) {
         Card swap = cards[a];
         cards[a] = cards[b];
         cards[b] = swap;
-
     }
 
     public boolean isFlush() {
         for (int i = 1; i < 5; i++) {
             if (cards[i].getS() != cards[0].getS()) {
-                //System.out.println("no flush");
                 return false;
             }
         }
-        //System.out.println("flush");
         return true;
     }
 
@@ -58,14 +59,11 @@ public class Hand {
             if (cards[i].getV() != cards[i+1].getV() + 1) {
                 if (i==0 && cards[0].getV() == 14 && cards[1].getV() == 5) { //A,5,4,3,2 is a straight
                     swap(0,1); //in this case 5 is the highest card. The order of the rest doesn´t matter
-                    //System.out.println("straight");
                     return true;
                 }
-                //System.out.println("no straight");
                 return false;
             }
         }
-        //System.out.println("straight");
         return true;
     }
 
@@ -78,7 +76,6 @@ public class Hand {
             } else {
                 switch (counter) {
                     case 2:
-                        //System.out.println("pair: " + cards[i - 1].getV());
                         if (pair != 0) {
                             pair2 = cards[i - 1].getV();
                             swap(2, i-2);
@@ -94,13 +91,11 @@ public class Hand {
                         }
                         break;
                     case 3:
-                        //System.out.println("triple: " + cards[i - 1].getV());
                         triple = cards[i - 1].getV();
                         swap(0, i-2);
                         swap(1, i-1);
                         break;
                     case 4:
-                        //System.out.println("quadruple: " + cards[i - 1].getV());
                         quadruple = cards[i - 1].getV();
                         swap(0, i-1);
                         break;
@@ -109,7 +104,8 @@ public class Hand {
             }
         }
     }
-    public int getRank() {
+
+    public int determineRank() {
         if (pair != 0) {
             if (pair2 != 0) {
                 return 2; //Two pairs
@@ -123,9 +119,9 @@ public class Hand {
         }
         if(isStraight()) {
             if(isFlush()) {
-                return 8;
+                return 8; //Straight Flush
             }
-            return 4;
+            return 4;   //Straight
         }
         if(isFlush()) {
             return 5; //Flush
@@ -134,5 +130,13 @@ public class Hand {
             return 7; //Four of a kind
         }
         return 0;
+    }
+
+    public Card getCard(int i) {
+        return cards[i];
+    }
+
+    public int getRank() {
+        return rank;
     }
 }
