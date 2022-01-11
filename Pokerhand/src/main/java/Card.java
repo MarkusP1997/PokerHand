@@ -5,4 +5,10 @@ public class Card {
         suit = s;
         value = v;
     }
+    int getS () {
+        return suit;
+    }
+    int getV () {
+        return value;
+    }
 }
